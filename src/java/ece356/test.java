@@ -18,7 +18,7 @@ import javax.naming.NamingException;
  */
 public class test {
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, NamingException, ClassNotFoundException{
-        System.out.println(authentication.validate("doc_cutter","doc_cuter","doctor"));
+        System.out.println(Authentication.validate("doc_cutter","doc_cuter","doctor"));
 
     }
 }

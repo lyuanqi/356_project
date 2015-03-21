@@ -40,11 +40,11 @@ public class LoginServlet extends HttpServlet {
         
         switch (userType) {
             case "doctor":
-                successUrl="success.jsp";
+                successUrl="protected/success.jsp";
                 failUrl="doctorSignInPage.jsp";
                 break;
             case "patient":
-                successUrl="success.jsp";
+                successUrl="protected/success.jsp";
                 failUrl="patientSignInPage.jsp";
                 break;
         }
@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
         
         HttpSession session = request.getSession(false);  
         try {
-            if (authentication.validate(user,pass,userType)==true){
+            if (Authentication.validate(user,pass,userType)==true){
                 url = successUrl;
                 if(session!=null){
                     session.setAttribute("alias", user);

@@ -17,7 +17,7 @@ import javax.sql.DataSource;
  *
  * @author liyuanqi
  */
-public class authentication {
+public class Authentication {
     
     public static String generateSalt()
         throws NoSuchAlgorithmException, InvalidKeySpecException
