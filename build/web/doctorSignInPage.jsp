@@ -41,7 +41,7 @@
       <form class="form-signin" action="LoginServlet?type=doctor" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">User Name</label>
-        <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="text" name="username" id="inputEmail" class="form-control" placeholder="User Alias" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="userpass" id="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">
@@ -56,4 +56,3 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
-

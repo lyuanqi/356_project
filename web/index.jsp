@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
     <title>Doctor Referral Program</title>
 
@@ -38,7 +37,7 @@
             <li role="presentation" class="active"><a href="#">Home</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">WattWarden</h3>
+        <h3 class="text-muted">ECE356 Project</h3>
       </div>
 
       <div class="jumbotron">

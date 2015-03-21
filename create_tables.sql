@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS 356_review;
 DROP TABLE IF EXISTS 356_doctors;
 CREATE TABLE 356_doctors (
   Alias varchar(64) NOT NULL,
+  Salt varchar(128) NOT NULL,
   Password varchar(128) NOT NULL,
   First_Name varchar(64) NOT NULL,
   Last_Name varchar(64) NOT NULL,
@@ -21,6 +22,7 @@ CREATE TABLE 356_doctors (
 DROP TABLE IF EXISTS 356_patients;
 CREATE TABLE 356_patients (
   Alias varchar(64) NOT NULL,
+  Salt varchar(128) NOT NULL,
   Password varchar(128) NOT NULL,
   First_Name varchar(64) NOT NULL,
   Last_Name varchar(64) NOT NULL,
@@ -96,8 +98,8 @@ CREATE TABLE 356_review (
 
 
 
-INSERT INTO 356_doctors(Alias,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_aiken','doc_aiken','John','Aikenhead','aiken@head.com','M','1990');
+INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
+VALUES ('doc_aiken','61e4853e511baad5602cde4ef138219d593615809105325b',SHA2(CONCAT('61e4853e511baad5602cde4ef138219d593615809105325b', 'doc_aiken'), 256),'John','Aikenhead','aiken@head.com','M','1990');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Elizabeth','Street','N2L','2W8','Waterloo','ON');
@@ -115,8 +117,8 @@ INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_aiken',1);
 INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_aiken',2);
 
 
-INSERT INTO 356_doctors(Alias,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_amnio','doc_amnio','Jane','Amniotic','obgyn_clinic@rogers.com','F','2005');
+INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
+VALUES ('doc_amnio','2d804813fc84fe0464150b975c3a3f260b6e8b1e1291ba93',SHA2(CONCAT('2d804813fc84fe0464150b975c3a3f260b6e8b1e1291ba93', 'doc_amnio'), 256),'Jane','Amniotic','obgyn_clinic@rogers.com','F','2005');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Jane','Street','N2L','2W8','Waterloo','ON');
@@ -135,8 +137,8 @@ INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_amnio',4);
 
 
 
-INSERT INTO 356_doctors(Alias,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_umbilical','doc_umbilical','Mary','Umbilical','obgyn_clinic@rogers.com','F','2006');
+INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
+VALUES ('doc_umbilical','e12ff087e44a926a1c4a4c7739f9a7a8e2d8777ead960275',SHA2(CONCAT('e12ff087e44a926a1c4a4c7739f9a7a8e2d8777ead960275', 'doc_umbilical'), 256),'Mary','Umbilical','obgyn_clinic@rogers.com','F','2006');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Mary','Street','N2L','1A2','Cambridge','ON');
@@ -151,8 +153,8 @@ INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_umbilical',5);
 
 
 
-INSERT INTO 356_doctors(Alias,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_heart','doc_heart','Jack','Hearty','jack@healthyheart.com','M','1980');
+INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
+VALUES ('doc_heart','8c030301f4d06576e6ea4676d6ad0768ba2e692e01dbf2db',SHA2(CONCAT('8c030301f4d06576e6ea4676d6ad0768ba2e692e01dbf2db', 'doc_heart'), 256),'Jack','Hearty','jack@healthyheart.com','M','1980');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Jack','Street','N2L','1G2','Guelph','ON');
@@ -171,8 +173,8 @@ INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_heart',7);
 
 
 
-INSERT INTO 356_doctors(Alias,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_cutter','doc_cutter','Beth','Cutter','beth@tummytuck.com','F','2014');
+INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
+VALUES ('doc_cutter','c93be283f06969db377f2f55ecbca0d815bb66b25fb65487',SHA2(CONCAT('c93be283f06969db377f2f55ecbca0d815bb66b25fb65487', 'doc_cutter'), 256),'Beth','Cutter','beth@tummytuck.com','F','2014');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Beth','Street','N2L','1C2','Cambridge','ON');
@@ -188,15 +190,15 @@ INSERT INTO 356_specialize(Specialization_ID,Doctor_Alias) VALUES(8,'doc_cutter'
 INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_cutter',8);
 INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_cutter',9);
 
-INSERT INTO 356_patients(Alias,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
-VALUES('pat_bob','pat_bob','Bob','Bobberson','thebobbersons@sympatico.ca','Waterloo','Ontario');
-INSERT INTO 356_patients(Alias,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
-VALUES('pat_peggy','pat_peggy','Peggy','Bobberson','thebobbersons@sympatico.ca','Waterloo','Ontario');
-INSERT INTO 356_patients(Alias,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
-VALUES('pat_homer','pat_homer','Homer','Homerson','homer@rogers.com','Kitchener','Ontario');
-INSERT INTO 356_patients(Alias,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
-VALUES('pat_kate','pat_kate','Kate','Katemyer','kate@hello.com','Cambridge','Ontario');
-INSERT INTO 356_patients(Alias,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
-VALUES('pat_anne','pat_anne','Anne','MacDonald','anne@gmail.com','Guelph','Ontario');
+INSERT INTO 356_patients(Alias,Salt,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
+VALUES('pat_bob','df36533768f536844e0f156113ddaf40f2ebe86e7a5ddb2e',SHA2(CONCAT('df36533768f536844e0f156113ddaf40f2ebe86e7a5ddb2e', 'pat_bob'), 256),'Bob','Bobberson','thebobbersons@sympatico.ca','Waterloo','Ontario');
+INSERT INTO 356_patients(Alias,Salt,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
+VALUES('pat_peggy','10b3723c8c90ef2b09c5dacfa9fc2796500606a41ec27702',SHA2(CONCAT('10b3723c8c90ef2b09c5dacfa9fc2796500606a41ec27702', 'pat_peggy'), 256),'Peggy','Bobberson','thebobbersons@sympatico.ca','Waterloo','Ontario');
+INSERT INTO 356_patients(Alias,Salt,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
+VALUES('pat_homer','c26762285a23482c6b83040ec026ac4efdf4548583fcbd52',SHA2(CONCAT('c26762285a23482c6b83040ec026ac4efdf4548583fcbd52', 'pat_homer'), 256),'Homer','Homerson','homer@rogers.com','Kitchener','Ontario');
+INSERT INTO 356_patients(Alias,Salt,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
+VALUES('pat_kate','b4ee53101ebc42448ca17ff837c66fa076ae1647da8ee2da',SHA2(CONCAT('b4ee53101ebc42448ca17ff837c66fa076ae1647da8ee2da', 'pat_kate'), 256),'Kate','Katemyer','kate@hello.com','Cambridge','Ontario');
+INSERT INTO 356_patients(Alias,Salt,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
+VALUES('pat_anne','e8dac3584beab5906877c25ab738457c6ef4fed65f593593',SHA2(CONCAT('e8dac3584beab5906877c25ab738457c6ef4fed65f593593', 'pat_anne'), 256),'Anne','MacDonald','anne@gmail.com','Guelph','Ontario');
 
 select 356_specialization.Specialization_Area, 356_specialize.Doctor_Alias from 356_specialization INNER JOIN 356_specialize ON 356_specialization.Specialization_ID=356_specialize.Specialization_ID;
