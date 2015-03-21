@@ -14,7 +14,7 @@ CREATE TABLE 356_doctors (
   First_Name varchar(64) NOT NULL,
   Last_Name varchar(64) NOT NULL,
   Email varchar(64) NOT NULL,
-  Gender varchar(1) NOT NULL,
+  Gender varchar(10) NOT NULL,
   Medical_Licence_Year int(100) NOT NULL DEFAULT '0',
   PRIMARY KEY (Alias)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -99,7 +99,7 @@ CREATE TABLE 356_review (
 
 
 INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_aiken','61e4853e511baad5602cde4ef138219d593615809105325b',SHA2(CONCAT('61e4853e511baad5602cde4ef138219d593615809105325b', 'doc_aiken'), 256),'John','Aikenhead','aiken@head.com','M','1990');
+VALUES ('doc_aiken','61e4853e511baad5602cde4ef138219d593615809105325b',SHA2(CONCAT('61e4853e511baad5602cde4ef138219d593615809105325b', 'doc_aiken'), 256),'John','Aikenhead','aiken@head.com','male','1990');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Elizabeth','Street','N2L','2W8','Waterloo','ON');
@@ -118,7 +118,7 @@ INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_aiken',2);
 
 
 INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_amnio','2d804813fc84fe0464150b975c3a3f260b6e8b1e1291ba93',SHA2(CONCAT('2d804813fc84fe0464150b975c3a3f260b6e8b1e1291ba93', 'doc_amnio'), 256),'Jane','Amniotic','obgyn_clinic@rogers.com','F','2005');
+VALUES ('doc_amnio','2d804813fc84fe0464150b975c3a3f260b6e8b1e1291ba93',SHA2(CONCAT('2d804813fc84fe0464150b975c3a3f260b6e8b1e1291ba93', 'doc_amnio'), 256),'Jane','Amniotic','obgyn_clinic@rogers.com','female','2005');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Jane','Street','N2L','2W8','Waterloo','ON');
@@ -138,7 +138,7 @@ INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_amnio',4);
 
 
 INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_umbilical','e12ff087e44a926a1c4a4c7739f9a7a8e2d8777ead960275',SHA2(CONCAT('e12ff087e44a926a1c4a4c7739f9a7a8e2d8777ead960275', 'doc_umbilical'), 256),'Mary','Umbilical','obgyn_clinic@rogers.com','F','2006');
+VALUES ('doc_umbilical','e12ff087e44a926a1c4a4c7739f9a7a8e2d8777ead960275',SHA2(CONCAT('e12ff087e44a926a1c4a4c7739f9a7a8e2d8777ead960275', 'doc_umbilical'), 256),'Mary','Umbilical','obgyn_clinic@rogers.com','female','2006');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Mary','Street','N2L','1A2','Cambridge','ON');
@@ -154,7 +154,7 @@ INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_umbilical',5);
 
 
 INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_heart','8c030301f4d06576e6ea4676d6ad0768ba2e692e01dbf2db',SHA2(CONCAT('8c030301f4d06576e6ea4676d6ad0768ba2e692e01dbf2db', 'doc_heart'), 256),'Jack','Hearty','jack@healthyheart.com','M','1980');
+VALUES ('doc_heart','8c030301f4d06576e6ea4676d6ad0768ba2e692e01dbf2db',SHA2(CONCAT('8c030301f4d06576e6ea4676d6ad0768ba2e692e01dbf2db', 'doc_heart'), 256),'Jack','Hearty','jack@healthyheart.com','male','1980');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Jack','Street','N2L','1G2','Guelph','ON');
@@ -174,7 +174,7 @@ INSERT INTO 356_work(Doctor_Alias,Office_ID) VALUES('doc_heart',7);
 
 
 INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Medical_Licence_Year)
-VALUES ('doc_cutter','c93be283f06969db377f2f55ecbca0d815bb66b25fb65487',SHA2(CONCAT('c93be283f06969db377f2f55ecbca0d815bb66b25fb65487', 'doc_cutter'), 256),'Beth','Cutter','beth@tummytuck.com','F','2014');
+VALUES ('doc_cutter','c93be283f06969db377f2f55ecbca0d815bb66b25fb65487',SHA2(CONCAT('c93be283f06969db377f2f55ecbca0d815bb66b25fb65487', 'doc_cutter'), 256),'Beth','Cutter','beth@tummytuck.com','female','2014');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
 VALUES(1,'Beth','Street','N2L','1C2','Cambridge','ON');
