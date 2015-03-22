@@ -20,6 +20,6 @@ BEGIN
 		WHERE NOT EXISTS (
 			SELECT * 
 			FROM 356_friends 
-			WHERE 356_friends.Alias = requestor_alias AND 356_friends.Friend_Alias = requestee_alias );Test_ResetDBTest_RequestFriendTest_RequestFriend
+			WHERE 356_friends.Alias = requestor_alias AND 356_friends.Friend_Alias = requestee_alias );
 END @@
 DELIMITER ;
