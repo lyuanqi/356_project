@@ -1,3 +1,30 @@
+/*5.2*/
+DROP PROCEDURE IF EXISTS Test_PatientSearch;
+DELIMITER @@
+CREATE PROCEDURE Test_PatientSearch(IN province VARCHAR(20), IN city VARCHAR(20), OUT num_matches INT) 
+BEGIN
+    SELECT COUNT(356_patients.Alias) INTO num_matches FROM 356_patients WHERE 356_patients.Addr_City = city AND 356_patients.Addr_Province = province;
+END @@ 
+DELIMITER ;
+
+/*5.3*/
+DROP PROCEDURE IF EXISTS Test_DoctorSearch;
+DELIMITER @@
+CREATE PROCEDURE Test_DoctorSearch
+(IN gender VARCHAR(20), IN city VARCHAR(20), IN specialization VARCHAR(20), IN num_years_licensed INT, OUT num_matches INT)
+BEGIN
+    /* returns in num_matches the total number of doctors that match exactly on all the given
+    criteria: gender ('male' or 'female'), city, specialization, and number of years licensed */
+    SELECT COUNT(DISTINCT 356_doctors.Alias) INTO num_matches 
+    FROM 356_doctors 
+    JOIN 356_work ON 356_doctors.Alias = 356_work.Doctor_Alias
+    JOIN 356_offices ON 356_work.Office_ID = 356_offices.Office_ID
+    JOIN 356_specialize ON 356_doctors.Alias = 356_specialize.Doctor_Alias
+    JOIN 356_specialization ON 356_specialize.Specialization_ID = 356_specialization.Specialization_ID
+    WHERE 356_doctors.Gender = gender AND 356_doctors.Medical_Licence_Year = YEAR(curdate())-num_years_licensed 
+            AND 356_offices.City = city AND 356_specialization.Specialization_Area = specialization;
+END @@
+DELIMITER ;
 
 /*5.4*/
 DROP PROCEDURE IF EXISTS Test_DoctorSearchStarRating;
