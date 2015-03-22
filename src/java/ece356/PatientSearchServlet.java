@@ -53,9 +53,9 @@ public class PatientSearchServlet extends HttpServlet {
             else{
                 url=failUrl;
                 out.print("<p style=\"color:red\">Sorry, no matched record</p>");   
-                out.print(alias);
-                out.print(city);
-                out.print(province);
+                //out.print(alias);
+                //out.print(city);
+                //out.print(province);
             }
             
         } catch (Exception e) {

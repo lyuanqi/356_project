@@ -5,9 +5,11 @@
  */
 package ece356;
 
+import ece356Types.DoctorProfile;
 import ece356Types.PatientSearchResult;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -138,5 +140,54 @@ public class DBAO {
             con.close(); // this statement returns the connection back to the pool
         }
         return results;
+    }
+
+    public static DoctorProfile getDoctorProfile(String alias) throws ClassNotFoundException, SQLException {
+
+        DoctorProfile profile = new DoctorProfile();
+        String statement="SELECT * FROM Doctor_Details WHERE DOCTOR=?";
+
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            stmt.setString(1,alias);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                profile.name=resultSet.getString("First_Name")+", "+resultSet.getString("Last_Name");
+                
+                String address=resultSet.getString("St_Number")+" "
+                        +resultSet.getString("St_Name")+" "
+                        +resultSet.getString("St_Type")+", "
+                        +resultSet.getString("City")+", "
+                        +resultSet.getString("Province")+", "
+                        +resultSet.getString("Postal_Code_pre")+" "
+                        +resultSet.getString("Postal_Code_suff");
+                
+                if (!profile.addresses.contains(address)){
+                    profile.addresses.add(address);
+                }
+                String specialization = resultSet.getString("Specialization_Area");
+                if (!profile.specializations.contains(specialization)){
+                    profile.specializations.add(specialization);
+                }
+                int current_year = Calendar.getInstance().get(Calendar.YEAR);
+                profile.years_licensed=current_year-resultSet.getInt("Medical_Licence_Year");
+                profile.avg_rating=0;
+                profile.review_count=0;
+                profile.review_links.add("none");
+                profile.write_link="nonn";
+            }
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return profile;
     }
 }

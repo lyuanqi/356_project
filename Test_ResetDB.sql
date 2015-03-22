@@ -201,5 +201,17 @@ VALUES('pat_kate','b4ee53101ebc42448ca17ff837c66fa076ae1647da8ee2da',SHA2(CONCAT
 INSERT INTO 356_patients(Alias,Salt,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
 VALUES('pat_anne','e8dac3584beab5906877c25ab738457c6ef4fed65f593593',SHA2(CONCAT('e8dac3584beab5906877c25ab738457c6ef4fed65f593593', 'pat_anne'), 256),'Anne','MacDonald','anne@gmail.com','Guelph','Ontario');
 
+DROP VIEW IF EXISTS Doctor_Details;
+CREATE VIEW Doctor_Details AS
+SELECT 356_doctors.Alias AS Doctor, 356_doctors.First_Name, 356_doctors.Last_Name, 356_doctors.Gender, 356_doctors.Email, 356_doctors.Medical_Licence_Year,
+356_offices.St_Number, 356_offices.St_Name, 356_offices.St_Type, 356_offices.City, 356_offices.Province,
+356_offices.Postal_Code_pre, 356_offices.Postal_Code_suff, 356_specialization.Specialization_Area
+FROM 356_doctors
+JOIN 356_work ON 356_doctors.Alias = 356_work.Doctor_Alias
+JOIN 356_offices ON 356_work.Office_ID = 356_offices.Office_ID
+JOIN 356_specialize ON 356_doctors.Alias = 356_specialize.Doctor_Alias
+JOIN 356_specialization ON 356_specialize.Specialization_ID = 356_specialization.Specialization_ID;
+
+
 END @@ 
 DELIMITER ;

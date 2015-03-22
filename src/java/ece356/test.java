@@ -5,6 +5,7 @@
  */
 package ece356;
 
+import ece356Types.DoctorProfile;
 import ece356Types.PatientSearchResult;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -20,9 +21,9 @@ import javax.naming.NamingException;
  */
 public class test {
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, NamingException, ClassNotFoundException{
-        ArrayList<PatientSearchResult> results=DBAO.patientSearch("pat_bob", null, null);
-        if (results!=null){
-                System.out.println(results.size());
+        DoctorProfile profile=DBAO.getDoctorProfile("doc_cutter");
+        if (profile!=null){
+                System.out.println(profile.name);
         }
 
     }
