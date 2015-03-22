@@ -5,9 +5,11 @@
  */
 package ece356;
 
+import ece356Types.PatientSearchResult;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -18,7 +20,10 @@ import javax.naming.NamingException;
  */
 public class test {
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, NamingException, ClassNotFoundException{
-        System.out.println(Authentication.validate("doc_cutter","doc_cuter","doctor"));
+        ArrayList<PatientSearchResult> results=DBAO.patientSearch("pat_bob", null, null);
+        if (results!=null){
+                System.out.println(results.size());
+        }
 
     }
 }

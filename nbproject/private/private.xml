@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/src/java/ece356/test.java</file>
-            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/web/doctorSignInPage.jsp</file>
-            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/web/patientSignInPage.jsp</file>
-            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/src/java/ece356/DBAO.java</file>
-            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/setup/glassfish-resources.xml</file>
-            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/src/java/ece356/authentication.java</file>
-            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/web/WEB-INF/web.xml</file>
+            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/src/java/ece356/LoginServlet.java</file>
+            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/src/java/ece356/LoginFilter.java</file>
+            <file>file:/Users/liyuanqi/Desktop/ECE356/Project/ECE356_Project/src/java/ece356/PasswordHash.java</file>
         </group>
     </open-files>
 </project-private>

@@ -48,8 +48,8 @@ public class Authentication {
         String statement1="SELECT Salt FROM "+table+" WHERE Alias=?";
         String statement2="SELECT * FROM "+table+" WHERE Alias=? AND Password=SHA2(CONCAT(?,?),256)";
 
-        //Connection con=DBAO.getConnection();
-        Connection con=DBAO.getTestConnection();
+        Connection con=DBAO.getConnection();
+        //Connection con=DBAO.getTestConnection();
         try {
             
             PreparedStatement stmt = con.prepareStatement(statement1);
