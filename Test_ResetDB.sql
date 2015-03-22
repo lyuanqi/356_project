@@ -201,4 +201,5 @@ VALUES('pat_kate','b4ee53101ebc42448ca17ff837c66fa076ae1647da8ee2da',SHA2(CONCAT
 INSERT INTO 356_patients(Alias,Salt,Password,First_Name,Last_Name,Email,Addr_City,Addr_Province)
 VALUES('pat_anne','e8dac3584beab5906877c25ab738457c6ef4fed65f593593',SHA2(CONCAT('e8dac3584beab5906877c25ab738457c6ef4fed65f593593', 'pat_anne'), 256),'Anne','MacDonald','anne@gmail.com','Guelph','Ontario');
 
-END @@ DELIMITER;
+END @@ 
+DELIMITER ;
