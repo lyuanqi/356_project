@@ -17,6 +17,7 @@
     </head>
     <body>
         <h1>Doctor: <%= profile.name%></h1>
+        <h3>Gender: <%= profile.gender%></h3>
         <h3>Average Star Rating: <%=profile.avg_rating%> </h3>
         <h3>Years since licensed: <%=profile.years_licensed%> </h3>
         <h3>Specialization Areas:</h3>

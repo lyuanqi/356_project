@@ -4,8 +4,10 @@
  */
 package ece356;
 
+import ece356Types.PatientSearchResult;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Wojciech Golab
  */
-public class LoginServlet extends HttpServlet {
+public class RenderDoctorSearchPageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -31,44 +33,29 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userType = request.getParameter("type");
-        String user=request.getParameter("username");    
-        String pass=request.getParameter("userpass");   
+        String alias=request.getParameter("alias");    
+        String city=request.getParameter("city"); 
+        String province = request.getParameter("province");
+
         String url = null;
-        String successUrl = null;
-        String failUrl = null;
+        String successUrl = "patientSearchResult.jsp";
+        String failUrl = "patientSearch.jsp";
         
-        switch (userType) {
-            case "doctor":
-                successUrl="success.jsp";
-                failUrl="doctorSignInPage.jsp";
-                break;
-            case "patient":
-                successUrl="patientHome.jsp";
-                failUrl="patientSignInPage.jsp";
-                break;
-        }
         response.setContentType("text/html");    
         PrintWriter out = response.getWriter();    
         
-        HttpSession session = request.getSession(false);  
         try {
-            if (Authentication.validate(user,pass,userType)==true){
+            ArrayList<PatientSearchResult> results=DBAO.patientSearch(alias,city,province);
+            if (results.size()>0){
                 url = successUrl;
-                if(session!=null){
-                    switch (userType) {
-                    case "doctor":
-                        session.setAttribute("doctor",user);
-                        break;
-                    case "patient":
-                        session.setAttribute("alias",user);
-                        break;
-                    }
-                }
+                request.setAttribute("results", results);
             }
             else{
                 url=failUrl;
-                out.print("<p style=\"color:red\">Sorry, unmatched username or password</p>");    
+                out.print("<p style=\"color:red\">Sorry, no matched record</p>");   
+                //out.print(alias);
+                //out.print(city);
+                //out.print(province);
             }
             
         } catch (Exception e) {
