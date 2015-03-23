@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ece356;
+package ece356Types;
 
 /**
  *
  * @author JieJerryLin
  */
-public class confirmFriendshipRequest {
+public class FriendshipRequestInfo {
     public String request_alias;
     public String email;
 }
