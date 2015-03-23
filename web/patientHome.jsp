@@ -17,5 +17,6 @@
     <h1>User: ${sessionScope.alias}</h1>
     <h2><a href="patientSearch.jsp">Patient Search</a></h2>
     <h2><a href="doctorSearch.jsp">Doctor Search</a></h2>
+    <h2><a href="FriendListServlet">View Friends</a></h2>
 </body>
 </html>
