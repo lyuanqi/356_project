@@ -129,7 +129,7 @@ BEGIN
     SELECT 356_friends.Friend_Accept INTO are_friends
     FROM 356_friends
     WHERE 356_friends.Alias = patient_alias_1 AND 356_friends.Friend_Alias = patient_alias_2;
-    IF are_friends = NULL THEN
+    IF isnull(are_friends) THEN
     SET are_friends = 0;
     END IF;
 END @@
