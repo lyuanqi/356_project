@@ -62,9 +62,10 @@ public class PatientSearchServlet extends HttpServlet {
         } catch (Exception e) {
             request.setAttribute("exception", e);
             url = "fancyError.jsp";
-        }
+        } finally {
             RequestDispatcher rd=request.getRequestDispatcher(url);    
             rd.include(request,response);  
             out.close();  
+        }
     }
 }

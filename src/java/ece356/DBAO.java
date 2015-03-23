@@ -474,4 +474,75 @@ public class DBAO {
             }
         return statement;
     }
+    public static void requestFriendship(String requestor, String requestee) 
+            throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        CallableStatement stmt = null;
+        try{
+            conn = getTestConnection();
+
+            String sql = "{CALL Test_RequestFriend (?, ?)}";
+            stmt = conn.prepareCall(sql);
+            stmt.setString(1, requestor);
+            stmt.setString(2, requestee);
+            stmt.execute();
+        }
+        catch(SQLException se){
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {}// nothing to do
+            
+            try{
+                if(conn != null)
+                conn.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+       }
+        
+    }
+    
+    public static Boolean checkFriendship(String requestor, String requestee)
+            throws ClassNotFoundException, SQLException {
+        Boolean friendship = false;
+        Connection conn = null;
+        CallableStatement stmt = null;
+        try{
+            conn = getTestConnection();
+
+            String sql = "{CALL AreFriends (?, ?, ?)}";
+            stmt = conn.prepareCall(sql);
+            stmt.setString(1, requestor);
+            stmt.setString(2, requestee);
+            stmt.registerOutParameter(3, java.sql.Types.INTEGER);
+            stmt.execute();
+            int retCode = stmt.getInt(3);
+            if(retCode == 1)
+                friendship = true;
+        }
+        catch(SQLException se){
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {}// nothing to do
+            
+            try{
+                if(conn != null)
+                conn.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+       }
+       return friendship;
+    }
+   
 }
