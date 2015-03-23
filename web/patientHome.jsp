@@ -53,7 +53,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-left">
-            <li><a href="patientSearch.jsp">Patient Search</a></li>
+            <li><a href="PatientPreSearchServlet">Patient Search</a></li>
           </ul>    
           <ul class="nav navbar-nav navbar-right">
             <li><a>User: <c:out value="${sessionScope.alias}" /></a></li>

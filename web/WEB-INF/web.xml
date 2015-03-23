@@ -37,6 +37,10 @@
         <servlet-name>FriendListServlet</servlet-name>
         <servlet-class>ece356.FriendListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PatientPreSearchServlet</servlet-name>
+        <servlet-class>ece356.PatientPreSearchServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -64,6 +68,10 @@
     <servlet-mapping>
         <servlet-name>FriendListServlet</servlet-name>
         <url-pattern>/FriendListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PatientPreSearchServlet</servlet-name>
+        <url-pattern>/PatientPreSearchServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

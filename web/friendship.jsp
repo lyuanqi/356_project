@@ -49,5 +49,6 @@
                 <% } %>
              </table>
         <% } %> 
+        <p><a href="patientHome.jsp" >Go back to patient home page</a></p>
     </body>
 </html>

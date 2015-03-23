@@ -4,7 +4,12 @@
     Author     : liyuanqi
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="ece356Types.FriendshipRequestInfo"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% ArrayList<String> cities = (ArrayList<String>)request.getAttribute("cities");
+    ArrayList<String> provinces = (ArrayList<String>)request.getAttribute("provinces");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,9 +22,27 @@
         <h4>Enter alias:</h4>
         <input type="text" name="alias">
         <h4>Enter city</h4>
-        <input type="text" name="city">
+        <Select name="city">
+            <option></option>
+            <%  if(cities != null) {
+                    for (String c : cities) {
+            %>
+                <option><%= c %></option>
+            <%      }
+                }
+            %>
+        </Select>
         <h4>Enter province</h4>
-        <input type="text" name="province">
+         <Select name="province">
+            <option></option>
+             <%  if(provinces != null) {
+                    for (String p : provinces) {
+            %>
+                <option><%= p %></option>
+            <%      }
+                }
+            %>
+        </Select>
         <button type="submit">Search</button>
       </form>
     </body>
