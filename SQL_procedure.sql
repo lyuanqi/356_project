@@ -161,6 +161,13 @@ BEGIN
     SELECT AVG(356_review.Rating) AS Average_Rating, COUNT(356_review.Review_ID) AS Review_Counts INTO avg_star, num_reviews
     From 356_review 
     WHERE 356_review.Doctor_Alias = doctor_alias GROUP BY 356_review.Doctor_Alias;
+
+	IF isnull(avg_star) THEN 
+		SET avg_star = 0; 
+	END IF;
+	IF isnull(num_reviews) THEN 
+		SET num_reviews = 0; 
+	END IF;
 END @@
 DELIMITER ;
 
