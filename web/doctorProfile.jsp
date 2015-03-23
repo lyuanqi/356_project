@@ -16,6 +16,12 @@
         <title>Doctor Profile</title>
     </head>
     <body>
+        <%if(session.getAttribute("userType")=="patient"){%>
+        <h3><a href="patientHome.jsp">Home</a></h3>
+        <% } %>
+        <%if(session.getAttribute("userType")=="doctor"){%>
+        <h3><a href="doctorHome.jsp">Home</a></h3>
+        <% } %>
         <h1>Doctor: <%= profile.name%></h1>
         <h3>Gender: <%= profile.gender%></h3>
         <h3>Average Star Rating: <%=profile.avg_rating%> </h3>

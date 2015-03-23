@@ -26,10 +26,6 @@ import javax.naming.NamingException;
 public class test {
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, NamingException, ClassNotFoundException{
         //DBAO.doctorSearch(first, last, licensed_years, gender, speciliazation, stnum, stname, sttype, pre, suff, city, province);
-        ArrayList<Integer> list = getReviewIDList("doc_cutter");
-        System.out.println(list.size());
-        for (int i:list){
-            System.out.println(i);
-        }
+        System.out.println(DBAO.getPreviousReviewID(1,"doc_cutter"));
     }
 }

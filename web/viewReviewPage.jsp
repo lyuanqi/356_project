@@ -16,11 +16,20 @@
         <title>Review Entry</title>
     </head>
     <body>
+        <%if(session.getAttribute("userType")=="patient"){%>
+        <h3><a href="patientHome.jsp">Home</a></h3>
+        <% } %>
+        <%if(session.getAttribute("userType")=="doctor"){%>
+        <h3><a href="doctorHome.jsp">Home</a></h3>
+        <% } %>
+        
         <h3>Reviewed On: <%=entry.Date%></h3>
         <h3>Reviewed By: <%=entry.Patient_Alias%></h3>
-        <h3>Doctor: <%=entry.Doctor_Alias %></h3>
+        <h3>Doctor: <%=entry.Doctor_Alias%></h3>
         <h3>Rating: <%=entry.Rating%></h3>
         <h3>Comment:</h3>
         <p><%=entry.Comment %></p>
+        <a href="FlipToPreviousReviewServlet?doctor=<%=entry.Doctor_Alias %>&ID=<%=entry.Review_ID%>">Previous Review</a>
+        <a href="FlipToNextReviewServlet?doctor=<%=entry.Doctor_Alias %>&ID=<%=entry.Review_ID%>">Next Review</a>
     </body>
 </html>

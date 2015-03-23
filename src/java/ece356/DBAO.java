@@ -851,7 +851,7 @@ public class DBAO {
         return results;
     }
 
-    static ArrayList<Integer> getReviewIDList(String doc_alias) throws ClassNotFoundException, SQLException {
+    public static ArrayList<Integer> getReviewIDList(String doc_alias) throws ClassNotFoundException, SQLException {
         ArrayList<Integer> list=new ArrayList<Integer>();
         String statement="SELECT * FROM 356_review WHERE Doctor_Alias=? ORDER BY DATE DESC";
         
@@ -878,7 +878,7 @@ public class DBAO {
         return list;
     }
 
-    static Review getReviewByID(int ID) throws SQLException, ClassNotFoundException {
+    public static Review getReviewByID(int ID) throws SQLException, ClassNotFoundException {
         Review entry=new Review();
         String statement="SELECT * FROM 356_review WHERE Review_ID=?";
         
@@ -908,5 +908,28 @@ public class DBAO {
             con.close(); // this statement returns the connection back to the pool
         }
         return entry;
+    }
+
+    public static int getNextReviewID(int intID, String doctor) throws ClassNotFoundException, SQLException {
+        int next=-1;
+        ArrayList<Integer> list=getReviewIDList(doctor);
+        for(int i=0;i<list.size();i++){
+            if (list.get(i)==intID && i+1<list.size())
+            {
+                next= list.get(i+1);
+            }
+        }
+        return next;
+    }
+    public static int getPreviousReviewID(int intID, String doctor) throws ClassNotFoundException, SQLException {
+        int previous=-1;
+        ArrayList<Integer> list=getReviewIDList(doctor);
+        for(int i=0;i<list.size();i++){
+            if (list.get(i)==intID && i-1>=0)
+            {
+                previous=list.get(i-1);
+            }
+        }
+        return previous;
     }
 }

@@ -16,5 +16,6 @@
 <body>
     <h1>User: ${sessionScope.doctor}</h1>
     <h2><a href="GetDoctorProfileServlet?alias=${sessionScope.doctor}">View Profile</a></h2>
+    <h2><a href="LogoutServlet">Logout</a></h2>
 </body>
 </html>

@@ -45,6 +45,14 @@
         <servlet-name>ViewReviewByIDServlet</servlet-name>
         <servlet-class>ece356.ViewReviewByIDServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FlipToNextReviewServlet</servlet-name>
+        <servlet-class>ece356.FlipToNextReviewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FlipToPreviousReviewServlet</servlet-name>
+        <servlet-class>ece356.FlipToPreviousReviewServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -80,6 +88,14 @@
     <servlet-mapping>
         <servlet-name>ViewReviewByIDServlet</servlet-name>
         <url-pattern>/ViewReviewByIDServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FlipToNextReviewServlet</servlet-name>
+        <url-pattern>/FlipToNextReviewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FlipToPreviousReviewServlet</servlet-name>
+        <url-pattern>/FlipToPreviousReviewServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

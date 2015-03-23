@@ -59,9 +59,11 @@ public class LoginServlet extends HttpServlet {
                     switch (userType) {
                     case "doctor":
                         session.setAttribute("doctor",user);
+                        session.setAttribute("userType","doctor");
                         break;
                     case "patient":
                         session.setAttribute("alias",user);
+                        session.setAttribute("userType","patient");
                         break;
                     }
                 }
