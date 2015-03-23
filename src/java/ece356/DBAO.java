@@ -5,6 +5,7 @@
  */
 package ece356;
 
+import ece356Types.FriendshipRequestInfo;
 import ece356Types.Condition;
 import ece356Types.DoctorProfile;
 import ece356Types.DoctorSearchResult;
@@ -614,6 +615,7 @@ public class DBAO {
             }
         return statement;
     }
+    
     public static void requestFriendship(String requestor, String requestee) 
             throws ClassNotFoundException, SQLException {
         Connection conn = null;
@@ -684,5 +686,163 @@ public class DBAO {
        }
        return friendship;
     }
-   
+    
+    public static ArrayList<FriendshipRequestInfo>listRequests(String myself)
+    {
+        ArrayList<FriendshipRequestInfo> results=new ArrayList<FriendshipRequestInfo>();
+        String sql = "SELECT 356_friends.Alias AS requestor, 356_patients.Email AS email FROM 356_friends "
+                + "JOIN 356_patients ON 356_friends.Alias = 356_patients.Alias "
+                + "WHERE 356_friends.Friend_Alias=? AND 356_friends.Friend_Accept = 0 ";
+
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = getTestConnection();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, myself);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                FriendshipRequestInfo entry = new FriendshipRequestInfo();
+                entry.request_alias = resultSet.getString("requestor");
+                entry.email = resultSet.getString("email");
+                results.add(entry);
+            }
+        }
+        catch(SQLException se){
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {}// nothing to do
+            
+            try{
+                if(con != null)
+                con.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+       }
+        return results;
+    }
+    
+    public static ArrayList<String>listFriends(String myself)
+    {
+        ArrayList<String> results=new ArrayList<String>();
+        String sql = "SELECT 356_friends.Friend_Alias AS friend FROM 356_friends "
+                + "WHERE 356_friends.Friend_Accept = 1 AND 356_friends.Alias=? ";
+
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = getTestConnection();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, myself);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                String friend = resultSet.getString("friend");
+                results.add(friend);
+            }
+        }
+        catch(SQLException se){
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {}// nothing to do
+            
+            try{
+                if(con != null)
+                con.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+       }
+        return results;
+    }
+    
+    public static ArrayList<String>GetAllDistinctCities()
+    {
+        ArrayList<String> results=new ArrayList<String>();
+        String sql = "SELECT DISTINCT Addr_City AS city FROM 356_patients";
+
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = getTestConnection();
+            stmt = con.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                String city = resultSet.getString("city");
+                results.add(city);
+            }
+        }
+        catch(SQLException se){
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {}// nothing to do
+            
+            try{
+                if(con != null)
+                con.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+       }
+        return results;
+    }
+    
+    public static ArrayList<String>GetAllDistinctProvinces()
+    {
+        ArrayList<String> results=new ArrayList<String>();
+        String sql = "SELECT DISTINCT Addr_Province AS province FROM 356_patients";
+
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = getTestConnection();
+            stmt = con.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                String province = resultSet.getString("province");
+                results.add(province);
+            }
+        }
+        catch(SQLException se){
+            se.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch(SQLException se2) {}// nothing to do
+            
+            try{
+                if(con != null)
+                con.close();
+            } catch(SQLException se) {
+                se.printStackTrace();
+            }
+       }
+        return results;
+    }
 }

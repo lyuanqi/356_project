@@ -40,7 +40,7 @@ public class PatientSearchServlet extends HttpServlet {
         String myself = (String)session.getAttribute("alias");
         String url = null;
         String successUrl = "patientSearchResult.jsp";
-        String failUrl = "patientSearch.jsp";
+        String failUrl = "PatientPreSearchServlet";
         
         response.setContentType("text/html");    
         PrintWriter out = response.getWriter();    
