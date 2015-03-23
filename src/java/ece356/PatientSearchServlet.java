@@ -36,7 +36,8 @@ public class PatientSearchServlet extends HttpServlet {
         String alias=request.getParameter("alias");    
         String city=request.getParameter("city"); 
         String province = request.getParameter("province");
-
+        HttpSession session = request.getSession(false);
+        String myself = (String)session.getAttribute("alias");
         String url = null;
         String successUrl = "patientSearchResult.jsp";
         String failUrl = "patientSearch.jsp";
@@ -45,7 +46,7 @@ public class PatientSearchServlet extends HttpServlet {
         PrintWriter out = response.getWriter();    
         
         try {
-            ArrayList<PatientSearchResult> results=DBAO.patientSearch(alias,city,province);
+            ArrayList<PatientSearchResult> results=DBAO.patientSearch(myself,alias,city,province);
             if (results.size()>0){
                 url = successUrl;
                 request.setAttribute("results", results);

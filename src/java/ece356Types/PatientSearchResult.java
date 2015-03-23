@@ -7,6 +7,8 @@ package ece356Types;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+
 /**
  *
  * @author liyuanqi
@@ -17,6 +19,7 @@ public class PatientSearchResult {
     public int review_count;
     public Date last_review;
     public String link;
+    public String friendship;
     
     public String GetLastReviewDate()
     {

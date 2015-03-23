@@ -26,7 +26,14 @@
                 <td><%= result.home_address%></td>
                 <td><%= result.review_count%></td>
                 <td><%= result.GetLastReviewDate()%></td>
-                <td><%= result.link%></td>
+                <td> <% 
+                        if(result.friendship != "none") {
+                     %>
+                     <%= result.friendship %>
+                     <% } else { %>
+                           <a href="<%= result.link%>" >Add as a friend</a>
+                     <% } %>
+                </td>
             </tr>
             <%
                 }
