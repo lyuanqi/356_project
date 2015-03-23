@@ -5,7 +5,9 @@
  */
 package ece356;
 
+import ece356Types.Condition;
 import ece356Types.DoctorProfile;
+import ece356Types.DoctorSearchResult;
 import ece356Types.PatientSearchResult;
 import java.sql.*;
 import java.util.ArrayList;
@@ -182,15 +184,17 @@ public class DBAO {
         }
         return results;
     }
-
+    
     public static DoctorProfile getDoctorProfile(String alias) throws ClassNotFoundException, SQLException {
 
         DoctorProfile profile = new DoctorProfile();
-        String statement="SELECT * FROM Doctor_Details WHERE DOCTOR=?";
-
+        String statement="SELECT * FROM Doctor_Details LEFT JOIN 356_review ON Doctor_Details.Doctor=356_review.Doctor_Alias WHERE DOCTOR=?";
         //Connection con=getConnection();
         Connection con=getTestConnection();
         try {
+            
+            profile.avg_rating= getDoctorAvgRating(alias);
+            profile.review_count=getDoctorReviewCount(alias);
             
             PreparedStatement stmt = con.prepareStatement(statement);
             stmt.setString(1,alias);
@@ -199,6 +203,7 @@ public class DBAO {
             while(resultSet.next())
             {
                 profile.name=resultSet.getString("First_Name")+", "+resultSet.getString("Last_Name");
+                profile.gender=resultSet.getString("gender");
                 
                 String address=resultSet.getString("St_Number")+" "
                         +resultSet.getString("St_Name")+" "
@@ -217,11 +222,11 @@ public class DBAO {
                 }
                 int current_year = Calendar.getInstance().get(Calendar.YEAR);
                 profile.years_licensed=current_year-resultSet.getInt("Medical_Licence_Year");
-                profile.avg_rating=0;
-                profile.review_count=0;
                 profile.review_links.add("none");
                 profile.write_link="nonn";
+                profile.profile_link="GetDoctorProfileServlet?alias="+alias;
             }
+
         }
         catch (Exception e) {  
             System.out.println(e);  
@@ -230,5 +235,243 @@ public class DBAO {
             con.close(); // this statement returns the connection back to the pool
         }
         return profile;
+    }
+
+    public static double getDoctorAvgRating(String alias) throws ClassNotFoundException, SQLException {
+        double rating=0;
+        String statement="SELECT AVG(356_review.Rating) AS Average_Rating From 356_review WHERE 356_review.Doctor_Alias = ? GROUP BY 356_review.Doctor_Alias;";
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            stmt.setString(1,alias);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            if(resultSet.next())
+            {
+                rating= resultSet.getFloat("Average_Rating");
+            }
+
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return rating;
+    }
+    
+    public static int getDoctorReviewCount(String alias) throws ClassNotFoundException, SQLException {
+        int count=0;
+        String statement="SELECT COUNT(356_review.Review_ID) AS Review_Count From 356_review WHERE 356_review.Doctor_Alias = ? GROUP BY 356_review.Doctor_Alias;";
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            stmt.setString(1,alias);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            if(resultSet.next())
+            {
+                count= resultSet.getInt("Review_Count");
+            }
+
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return count;
+    }
+    
+    public static ArrayList<DoctorSearchResult> doctorSearch(String first, String last, String licensed_years, String gender, String speciliazation, String stnum, String stname,String sttype,String pre,String suff, String city, String province, String keyword) throws SQLException, NamingException, ClassNotFoundException{
+        int conditionCount=0;
+        ArrayList<Condition> conditions=new ArrayList<Condition>();
+        String type;
+        String value;
+        ArrayList<String> aliases=new ArrayList<String>();
+        ArrayList<DoctorSearchResult> results=new ArrayList<DoctorSearchResult>();
+        String statement1="SELECT * FROM Doctor_Details LEFT JOIN 356_review ON Doctor_Details.Doctor=356_review.Doctor_Alias";
+        
+        if (first.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "First_Name LIKE ?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value="%"+first+"%";
+            conditions.add(temp);
+        }
+        if (last.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "Last_Name LIKE ?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value="%"+last+"%";
+            conditions.add(temp);
+        }
+        if (licensed_years.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "YEAR(NOW())-Medical_Licence_Year>?";
+            Condition temp=new Condition();
+            temp.type="int";
+            temp.value=licensed_years;
+            conditions.add(temp);
+        }
+        if (gender.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "Gender=?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value=gender;
+            conditions.add(temp);
+        }
+        if (speciliazation.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "Specialization_Area=?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value=speciliazation;
+            conditions.add(temp);
+        }
+        if (stnum.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "St_Number=?";
+            Condition temp=new Condition();
+            temp.type="int";
+            temp.value=stnum;
+            conditions.add(temp);
+        }
+        if (stname.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "St_Name=?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value=stname;
+            conditions.add(temp);
+        }
+        if (sttype.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "St_Type=?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value=sttype;
+            conditions.add(temp);
+        }
+        if (pre.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "Postal_Code_pre=?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value=pre;
+            conditions.add(temp);
+        }
+        if (suff.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "Postal_Code_suff=?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value=suff;
+            conditions.add(temp);
+        }
+        if (city.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "City=?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value=city;
+            conditions.add(temp);
+        }
+        if (province.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "Province=?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value=province;
+            conditions.add(temp);
+        }
+        if (keyword.length()>0){
+            conditionCount++;
+            statement1=appendWhereORAnd(statement1,conditionCount);
+            statement1+= "Comment Like ?";
+            Condition temp=new Condition();
+            temp.type="String";
+            temp.value="%"+keyword+"%";
+            conditions.add(temp);
+        }
+
+        
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement1);
+            for (int i=0;i<conditions.size();i++){
+                type=conditions.get(i).type;
+                switch (type) {
+                case "int": 
+                        stmt.setInt(i+1,Integer.parseInt(conditions.get(i).value));
+                        break;
+                case "String":
+                        stmt.setString(i+1,conditions.get(i).value);
+                        break;
+                }
+            }
+            System.out.println(stmt);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                if (!aliases.contains(resultSet.getString("Doctor"))){
+                    aliases.add(resultSet.getString("Doctor"));
+                }
+                
+            }
+            for (int i=0;i<aliases.size();i++){
+                //aliases.add(resultSet.getString("Doctor"));
+                DoctorSearchResult result=new DoctorSearchResult();
+                DoctorProfile profile=new DoctorProfile();
+                profile=getDoctorProfile(aliases.get(i));
+                result.gender=profile.gender;
+                result.name=profile.name;
+                result.profile_link=profile.profile_link;
+                result.avg_rating=profile.avg_rating;
+                result.review_count=profile.review_count;
+                results.add(result);            
+            }
+
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return results;
+    }
+    public static String appendWhereORAnd(String statement, int conditionCount){
+            if (conditionCount==1){
+                statement+= " WHERE ";
+            }
+            else if (conditionCount>=2){
+                statement+= " AND ";
+            }
+        return statement;
     }
 }

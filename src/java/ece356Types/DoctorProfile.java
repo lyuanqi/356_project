@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class DoctorProfile {
     public String name;
+    public String gender;
     public ArrayList<String> addresses =new ArrayList<String>();
     public ArrayList<String> specializations =new ArrayList<String>();
     public int years_licensed;
@@ -20,4 +21,5 @@ public class DoctorProfile {
     public int review_count;
     public ArrayList<String> review_links =new ArrayList<String>();
     public String write_link;
+    public String profile_link;
 }

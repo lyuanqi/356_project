@@ -48,7 +48,7 @@ CREATE TABLE 356_offices (
   Postal_Code_pre varchar(3) NOT NULL,
   Postal_Code_suff varchar(3) NOT NULL,
   City varchar(32) NOT NULL,
-  Province varchar(2) NOT NULL,
+  Province varchar(32) NOT NULL,
   PRIMARY KEY (Office_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -102,10 +102,10 @@ INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Me
 VALUES ('doc_aiken','61e4853e511baad5602cde4ef138219d593615809105325b',SHA2(CONCAT('61e4853e511baad5602cde4ef138219d593615809105325b', 'doc_aiken'), 256),'John','Aikenhead','aiken@head.com','male','1990');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(1,'Elizabeth','Street','N2L','2W8','Waterloo','ON');
+VALUES(1,'Elizabeth','Street','N2L','2W8','Waterloo','Ontario');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(2,'Aikenhead','Street','N2L','1K2','Kitchener','ON');
+VALUES(2,'Aikenhead','Street','N2L','1K2','Kitchener','Ontario');
 
 INSERT INTO 356_specialization(Specialization_Area) VALUES('allergologist');
 INSERT INTO 356_specialization(Specialization_Area) VALUES('naturopath');
@@ -121,10 +121,10 @@ INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Me
 VALUES ('doc_amnio','2d804813fc84fe0464150b975c3a3f260b6e8b1e1291ba93',SHA2(CONCAT('2d804813fc84fe0464150b975c3a3f260b6e8b1e1291ba93', 'doc_amnio'), 256),'Jane','Amniotic','obgyn_clinic@rogers.com','female','2005');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(1,'Jane','Street','N2L','2W8','Waterloo','ON');
+VALUES(1,'Jane','Street','N2L','2W8','Waterloo','Ontario');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(2,'Amniotic','Street','N2P','2K5','Kitchener','ON');
+VALUES(2,'Amniotic','Street','N2P','2K5','Kitchener','Ontario');
 
 INSERT INTO 356_specialization(Specialization_Area) VALUES('obstetrician');
 INSERT INTO 356_specialization(Specialization_Area) VALUES('gynecologist');
@@ -141,7 +141,7 @@ INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Me
 VALUES ('doc_umbilical','e12ff087e44a926a1c4a4c7739f9a7a8e2d8777ead960275',SHA2(CONCAT('e12ff087e44a926a1c4a4c7739f9a7a8e2d8777ead960275', 'doc_umbilical'), 256),'Mary','Umbilical','obgyn_clinic@rogers.com','female','2006');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(1,'Mary','Street','N2L','1A2','Cambridge','ON');
+VALUES(1,'Mary','Street','N2L','1A2','Cambridge','Ontario');
 
 INSERT INTO 356_specialization(Specialization_Area) VALUES('naturopath');
 
@@ -157,10 +157,10 @@ INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Me
 VALUES ('doc_heart','8c030301f4d06576e6ea4676d6ad0768ba2e692e01dbf2db',SHA2(CONCAT('8c030301f4d06576e6ea4676d6ad0768ba2e692e01dbf2db', 'doc_heart'), 256),'Jack','Hearty','jack@healthyheart.com','male','1980');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(1,'Jack','Street','N2L','1G2','Guelph','ON');
+VALUES(1,'Jack','Street','N2L','1G2','Guelph','Ontario');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(2,'Heart','Street','N2P','2W5','Waterloo','ON');
+VALUES(2,'Heart','Street','N2P','2W5','Waterloo','Ontario');
 
 INSERT INTO 356_specialization(Specialization_Area) VALUES('cardiologist');
 INSERT INTO 356_specialization(Specialization_Area) VALUES('surgeon');
@@ -177,10 +177,10 @@ INSERT INTO 356_doctors(Alias,Salt,Password,First_Name,Last_Name,Email,Gender,Me
 VALUES ('doc_cutter','c93be283f06969db377f2f55ecbca0d815bb66b25fb65487',SHA2(CONCAT('c93be283f06969db377f2f55ecbca0d815bb66b25fb65487', 'doc_cutter'), 256),'Beth','Cutter','beth@tummytuck.com','female','2014');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(1,'Beth','Street','N2L','1C2','Cambridge','ON');
+VALUES(1,'Beth','Street','N2L','1C2','Cambridge','Ontario');
 
 INSERT INTO 356_offices(St_Number,St_Name,St_Type,Postal_Code_pre,Postal_Code_suff,City,Province)
-VALUES(2,'Cutter','Street','N2P','2K5','Kitchener','ON');
+VALUES(2,'Cutter','Street','N2P','2K5','Kitchener','Ontario');
 
 INSERT INTO 356_specialization(Specialization_Area) VALUES('psychiatrist');
 

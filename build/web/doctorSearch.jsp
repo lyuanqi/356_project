@@ -20,23 +20,26 @@
         <p>Number of Years Licensed Greater Than: <input type="text" name="years"></p>
         <p>Gender:
         <Select name="gender">
-            <option>male</option>
-            <option>female</option>
+            <option></option>
+            <option value="male">male</option>
+            <option value="female">female</option>
         </Select>
         </p>
         <p>Specialization Area
         <Select name="special">
+            <option></option>
             <option>surgeon</option>
         </Select>
         </p>
-        <p>Average Star Rating Greater Than :         
+        <p>Average Star Rating Greater Or Equal To:         
         <Select name="rating">
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option value=""></option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="4">5</option>
         </Select>
         </p>
         <p>Reviewed By A Friend<input type="checkbox" name="reviewed"></p>

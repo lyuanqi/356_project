@@ -21,10 +21,8 @@ import javax.naming.NamingException;
  */
 public class test {
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, NamingException, ClassNotFoundException{
-        DoctorProfile profile=DBAO.getDoctorProfile("doc_cutter");
-        if (profile!=null){
-                System.out.println(profile.name);
-        }
+        //DBAO.doctorSearch(first, last, licensed_years, gender, speciliazation, stnum, stname, sttype, pre, suff, city, province);
+        DBAO.doctorSearch("", "", "", "", "", "", "", "", "", "", "", "","good");
 
     }
 }
