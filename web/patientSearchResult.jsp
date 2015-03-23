@@ -16,6 +16,7 @@
         <title>Patient Search Results</title>
     </head>
     <body>
+        <h3><a href="patientHome.jsp">Home</a></h3>
         <h1>Patient Data</h1>
         <table border=1><tr><th>Patient Alias</th><th>Address</th><th>Review Count</th><th>Last Review Date</th><th>Add Friend Link</th></tr>
             <%

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : patientHome
-    Created on : Mar 21, 2015, 5:27:44 PM
+    Document   : doctor
+    Created on : Mar 23, 2015, 5:21:51 AM
     Author     : liyuanqi
 --%>
 
@@ -14,8 +14,7 @@
   </head>
 
 <body>
-    <h1>User: ${sessionScope.alias}</h1>
-    <h2><a href="patientSearch.jsp">Patient Search</a></h2>
-    <h2><a href="doctorSearch.jsp">Doctor Search</a></h2>
+    <h1>User: ${sessionScope.doctor}</h1>
+    <h2><a href="GetDoctorProfileServlet?alias=${sessionScope.doctor}">View Profile</a></h2>
 </body>
 </html>

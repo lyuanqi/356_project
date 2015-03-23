@@ -34,11 +34,15 @@ public class DoctorSearchServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession(false); 
+        String self=(String)session.getAttribute("alias");
+
         String first=request.getParameter("first");
         String last=request.getParameter("last");
         String licensed_years=request.getParameter("years");
         String gender=request.getParameter("gender");
-        String speciliazation=request.getParameter("special");
+        String specialization=request.getParameter("special");
         String stnum=request.getParameter("stnum");
         String stname=request.getParameter("stname");
         String sttype=request.getParameter("sttype");
@@ -47,6 +51,12 @@ public class DoctorSearchServlet extends HttpServlet {
         String city=request.getParameter("city");
         String province=request.getParameter("province");
         String keyword=request.getParameter("keyword");
+        String rating=request.getParameter("rating");
+        String reviewed="";
+        if (request.getParameter("reviewed")!=null){
+            reviewed=request.getParameter("reviewed");
+        }
+        
 
         String url = null;
         String successUrl = "doctorSearchResult.jsp";
@@ -56,7 +66,7 @@ public class DoctorSearchServlet extends HttpServlet {
         PrintWriter out = response.getWriter();    
         
         try {
-            ArrayList<DoctorSearchResult> results=DBAO.doctorSearch(first, last, licensed_years, gender, speciliazation, stnum, stname, sttype, pre, suff, city, province, keyword);
+            ArrayList<DoctorSearchResult> results=DBAO.doctorSearch(self,first,last,licensed_years,gender,specialization,stnum,stname,sttype,pre,suff,city,province,keyword,rating,reviewed);
             if (results.size()>0){
                 url = successUrl;
                 request.setAttribute("results", results);
@@ -65,9 +75,7 @@ public class DoctorSearchServlet extends HttpServlet {
                 url=failUrl;
                 out.print("<p style=\"color:red\">Sorry, no matched record</p>");
                 
-                out.print(first+","+last+","+licensed_years+","+gender+","+speciliazation+","+stnum+","+stname+","+sttype+","+pre+","+suff+","+city+","+province+","+keyword);
-                //out.print(city);
-                //out.print(province);
+                out.print("\""+self+"\",\""+first+"\",\""+last+"\",\""+licensed_years+"\",\""+gender+"\",\""+specialization+"\",\""+stnum+"\",\""+stname+"\",\""+sttype+"\",\""+pre+"\",\""+suff+"\",\""+city+"\",\""+province+"\",\""+keyword+"\",\""+rating+"\",\""+reviewed+"\"");
             }
             
         } catch (Exception e) {

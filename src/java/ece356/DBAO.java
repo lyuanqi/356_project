@@ -288,15 +288,127 @@ public class DBAO {
         }
         return count;
     }
-    
-    public static ArrayList<DoctorSearchResult> doctorSearch(String first, String last, String licensed_years, String gender, String speciliazation, String stnum, String stname,String sttype,String pre,String suff, String city, String province, String keyword) throws SQLException, NamingException, ClassNotFoundException{
+
+    public static boolean reviewdByFriend(String patient_alias, String doctor_alias) throws ClassNotFoundException, SQLException {
+        boolean reviewed=false;
+        String statement="SELECT * FROM 356_friends JOIN 356_review ON 356_friends.Friend_Alias = 356_review.Patient_Alias WHERE 356_friends.Alias=? AND 356_friends.Friend_Accept=1 AND 356_review.Doctor_Alias=?";
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            stmt.setString(1,patient_alias);
+            stmt.setString(2,doctor_alias);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            if(resultSet.next())
+            {
+                reviewed=true;
+            }
+
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return reviewed;
+    }
+
+        public static ArrayList<String> getAllSpecialization() throws ClassNotFoundException, SQLException {
+        ArrayList<String> results=new ArrayList<String>();
+        String statement="SELECT DISTINCT Specialization_Area FROM 356_specialization ORDER BY Specialization_Area";
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                results.add(resultSet.getString("Specialization_Area"));
+            }
+
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return results;
+    }
+
+        public static ArrayList<String> getAllElements(String targetType, String column) throws ClassNotFoundException, SQLException {
+        ArrayList<String> results=new ArrayList<String>();
+        String statement="";
+        
+        switch (targetType) {
+            case "patient":
+                switch(column){
+                    case "province":
+                        statement = "SELECT DISTINCT Addr_Province AS Result FROM 356_patients ORDER BY Addr_Province";
+                        break;
+                    case "city":
+                        statement = "SELECT DISTINCT Addr_City AS Result FROM 356_patients ORDER BY Addr_City";
+                        break;
+                }   break;
+            case "doctor":
+                switch(column){
+                    case "province":
+                        statement = "SELECT DISTINCT Province AS Result FROM 356_offices ORDER BY Province";
+                        break;
+                    case "city":
+                        statement = "SELECT DISTINCT City AS Result FROM 356_offices ORDER BY City";
+                        break;
+                    case "stname":
+                        statement = "SELECT DISTINCT St_Name AS Result FROM 356_offices ORDER BY St_Name";
+                        break;
+                    case "sttype":
+                        statement = "SELECT DISTINCT St_Type AS Result FROM 356_offices ORDER BY St_Type";
+                        break;
+                    case "prefix":
+                        statement = "SELECT DISTINCT Postal_Code_pre AS Result FROM 356_offices ORDER BY Postal_Code_pre";
+                        break;
+                    case "suffix":
+                        statement = "SELECT DISTINCT Postal_Code_suff AS Result FROM 356_offices ORDER BY Postal_Code_suff";
+                        break;
+            }   break;
+        }
+        
+
+
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                results.add(resultSet.getString("Result"));
+            }
+
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return results;
+    }
+        
+    public static ArrayList<DoctorSearchResult> doctorSearch(String self, String first, String last, String licensed_years, String gender, String speciliazation, String stnum, String stname,String sttype,String pre,String suff, String city, String province, String keyword, String rating, String reviewed) throws SQLException, NamingException, ClassNotFoundException{
         int conditionCount=0;
         ArrayList<Condition> conditions=new ArrayList<Condition>();
-        String type;
-        String value;
         ArrayList<String> aliases=new ArrayList<String>();
         ArrayList<DoctorSearchResult> results=new ArrayList<DoctorSearchResult>();
         String statement1="SELECT * FROM Doctor_Details LEFT JOIN 356_review ON Doctor_Details.Doctor=356_review.Doctor_Alias";
+        String type;
         
         if (first.length()>0){
             conditionCount++;
@@ -443,6 +555,34 @@ public class DBAO {
                 }
                 
             }
+            
+            if (rating.length()>0){
+                ArrayList<String> temp = new ArrayList<String>();
+                for (int i=0;i<aliases.size();i++){
+                    if(getDoctorAvgRating(aliases.get(i))>=Integer.parseInt(rating)){
+                        temp.add(aliases.get(i));
+                    } 
+                }
+                aliases.clear();
+                for (int i=0;i<temp.size();i++){
+                    aliases.add(temp.get(i));
+                }
+            }
+            System.out.println(aliases);
+            if (reviewed.equals("on")){
+                ArrayList<String> temp = new ArrayList<String>();
+                for (int i=0;i<aliases.size();i++){
+                    if(reviewdByFriend(self,aliases.get(i))){
+                        temp.add(aliases.get(i));
+                    } 
+                }
+                aliases.clear();
+                for (int i=0;i<temp.size();i++){
+                    aliases.add(temp.get(i));
+                }
+            }
+            System.out.println(aliases);
+            
             for (int i=0;i<aliases.size();i++){
                 //aliases.add(resultSet.getString("Doctor"));
                 DoctorSearchResult result=new DoctorSearchResult();

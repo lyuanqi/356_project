@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
         
         switch (userType) {
             case "doctor":
-                successUrl="success.jsp";
+                successUrl="doctorHome.jsp";
                 failUrl="doctorSignInPage.jsp";
                 break;
             case "patient":

@@ -4,6 +4,8 @@
     Author     : liyuanqi
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="ece356.DBAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,7 @@
         <title>Doctor Search</title>
     </head>
     <body>
+        <h3><a href="patientHome.jsp">Home</a></h3>
       <form action="DoctorSearchServlet" method="post">
         <h2>Please fill in search criteria</h2>
         <h3>**Doctor Profile Section**</h3>
@@ -28,7 +31,10 @@
         <p>Specialization Area
         <Select name="special">
             <option></option>
-            <option>surgeon</option>
+            <% ArrayList<String> results=(ArrayList<String>)DBAO.getAllSpecialization();%>
+            <%for(String result : results){%>
+            <option value="<%=result%>"><%=result%></option>
+            <%}%>
         </Select>
         </p>
         <p>Average Star Rating Greater Or Equal To:         
@@ -46,12 +52,61 @@
         <p>Review Keyword: <input type="text" name="keyword"></p>
         <h3>**Doctor Office Section**</h3>
         <p>Street Number: <input type="text" name="stnum"></p>
-        <p>Street Name: <input type="text" name="stname"></p>
-        <p>Street Type: <input type="text" name="sttype"></p>
-        <p>Postal Code Prefix: <input type="text" name="prefix"></p>
-        <p>Postal Code Suffix: <input type="text" name="suffix"></p>
-        <p>City: <input type="text" name="city"></p>
-        <p>Province: <input type="text" name="province"></p>
+        <p>Street Name:         
+        <Select name="stname">
+            <option></option>
+            <% ArrayList<String> stnames=(ArrayList<String>)DBAO.getAllElements("doctor","stname");%>
+            <%for(String result : stnames){%>
+            <option value="<%=result%>"><%=result%></option>
+            <%}%>
+        </Select>
+        </p>
+        
+        <p>Street Type: 
+        <Select name="sttype">
+            <option></option>
+            <% ArrayList<String> sttypes=(ArrayList<String>)DBAO.getAllElements("doctor","sttype");%>
+            <%for(String result : sttypes){%>
+            <option value="<%=result%>"><%=result%></option>
+            <%}%>
+        </Select>
+        </p>
+        <p>Postal Code Prefix: 
+        <Select name="prefix">
+            <option></option>
+            <% ArrayList<String> prefixes=(ArrayList<String>)DBAO.getAllElements("doctor","prefix");%>
+            <%for(String result : prefixes){%>
+            <option value="<%=result%>"><%=result%></option>
+            <%}%>
+        </Select>
+        </p>
+        <p>Postal Code Suffix: 
+        <Select name="suffix">
+            <option></option>
+            <% ArrayList<String> suffixes=(ArrayList<String>)DBAO.getAllElements("doctor","suffix");%>
+            <%for(String result : suffixes){%>
+            <option value="<%=result%>"><%=result%></option>
+            <%}%>
+        </Select>
+        </p>
+        <p>City: 
+        <Select name="city">
+            <option></option>
+            <% ArrayList<String> cities=(ArrayList<String>)DBAO.getAllElements("doctor","city");%>
+            <%for(String result : cities){%>
+            <option value="<%=result%>"><%=result%></option>
+            <%}%>
+        </Select>
+        </p>
+        <p>Province: 
+        <Select name="province">
+            <option></option>
+            <% ArrayList<String> provinces=(ArrayList<String>)DBAO.getAllElements("doctor","province");%>
+            <%for(String result : provinces){%>
+            <option value="<%=result%>"><%=result%></option>
+            <%}%>
+        </Select>
+        </p>
         <button type="submit">Search</button>
       </form>
     </body>

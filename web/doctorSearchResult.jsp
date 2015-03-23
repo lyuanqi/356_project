@@ -15,6 +15,7 @@
         <title>Doctor Search Results</title>
     </head>
     <body>
+        <h3><a href="patientHome.jsp">Home</a></h3>
         <h1>Patient Data</h1>
         <table border=1><tr><th>Doctor Name</th><th>Gender</th><th>Average Rating</th><th>Related Reviews</th><th>Profile Link</th></tr>
             <%
