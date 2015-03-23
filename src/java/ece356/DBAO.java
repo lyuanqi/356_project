@@ -204,6 +204,7 @@ public class DBAO {
             
             while(resultSet.next())
             {
+                profile.alias=alias;
                 profile.name=resultSet.getString("First_Name")+", "+resultSet.getString("Last_Name");
                 profile.gender=resultSet.getString("gender");
                 
@@ -225,7 +226,7 @@ public class DBAO {
                 int current_year = Calendar.getInstance().get(Calendar.YEAR);
                 profile.years_licensed=current_year-resultSet.getInt("Medical_Licence_Year");
                 
-                profile.write_link="nonn";
+                profile.write_link="writeReview.jsp";
                 profile.profile_link="GetDoctorProfileServlet?alias="+alias;
             }
             ArrayList<Integer> list = getReviewIDList(alias);
@@ -931,5 +932,30 @@ public class DBAO {
             }
         }
         return previous;
+    }
+
+    static boolean writeReview(String doctor_alias, String patient_alias, String comment, int rating) throws SQLException, ClassNotFoundException {
+        boolean success=false;
+        String statement="INSERT INTO 356_review(Patient_Alias,Doctor_Alias,Rating,Comment,date) VALUES (?,?,?,?,NOW());";
+        
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            stmt.setString(1,patient_alias);
+            stmt.setString(2,doctor_alias);
+            stmt.setInt(3,rating);
+            stmt.setString(4,comment);
+            stmt.executeUpdate();
+            success=true;
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return success;
     }
 }

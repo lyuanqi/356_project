@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author liyuanqi
  */
 public class DoctorProfile {
+    public String alias;
     public String name;
     public String gender;
     public ArrayList<String> addresses =new ArrayList<String>();
