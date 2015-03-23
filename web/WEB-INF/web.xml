@@ -41,6 +41,10 @@
         <servlet-name>PatientPreSearchServlet</servlet-name>
         <servlet-class>ece356.PatientPreSearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewReviewByIDServlet</servlet-name>
+        <servlet-class>ece356.ViewReviewByIDServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -72,6 +76,10 @@
     <servlet-mapping>
         <servlet-name>PatientPreSearchServlet</servlet-name>
         <url-pattern>/PatientPreSearchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewReviewByIDServlet</servlet-name>
+        <url-pattern>/ViewReviewByIDServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

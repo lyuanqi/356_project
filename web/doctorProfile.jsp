@@ -38,9 +38,9 @@
             %>
         <h3>Related Reviews (Total: <%=profile.review_count%>)</h3>
             <%
-                for (String link : profile.review_links ) {
+                for (int i=0;i<profile.review_links.size();i++ ) {
             %>
-            <p><a href="<%=link%>"></a><p>
+            <p><a href="<%=profile.review_links.get(i) %>">Review <%=i+1%></a><p>
             <%
                 }
             %>

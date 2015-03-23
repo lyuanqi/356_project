@@ -5,9 +5,12 @@
  */
 package ece356;
 
+import static ece356.DBAO.getReviewByID;
+import static ece356.DBAO.getReviewIDList;
 import ece356Types.DoctorProfile;
 import ece356Types.DoctorSearchResult;
 import ece356Types.PatientSearchResult;
+import ece356Types.Review;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
@@ -23,11 +26,10 @@ import javax.naming.NamingException;
 public class test {
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, NamingException, ClassNotFoundException{
         //DBAO.doctorSearch(first, last, licensed_years, gender, speciliazation, stnum, stname, sttype, pre, suff, city, province);
-        ArrayList<DoctorSearchResult> results=DBAO.doctorSearch("pat_bob","","","","","","","","","","","","","","","null");
-        System.out.println(results.size());
-        for (DoctorSearchResult result:results){
-            System.out.println(result.name);;
+        ArrayList<Integer> list = getReviewIDList("doc_cutter");
+        System.out.println(list.size());
+        for (int i:list){
+            System.out.println(i);
         }
-
     }
 }

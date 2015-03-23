@@ -10,6 +10,7 @@ import ece356Types.Condition;
 import ece356Types.DoctorProfile;
 import ece356Types.DoctorSearchResult;
 import ece356Types.PatientSearchResult;
+import ece356Types.Review;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -223,9 +224,13 @@ public class DBAO {
                 }
                 int current_year = Calendar.getInstance().get(Calendar.YEAR);
                 profile.years_licensed=current_year-resultSet.getInt("Medical_Licence_Year");
-                profile.review_links.add("none");
+                
                 profile.write_link="nonn";
                 profile.profile_link="GetDoctorProfileServlet?alias="+alias;
+            }
+            ArrayList<Integer> list = getReviewIDList(alias);
+            for (int i:list){
+                profile.review_links.add("ViewReviewByIDServlet?ID="+i);
             }
 
         }
@@ -844,5 +849,64 @@ public class DBAO {
             }
        }
         return results;
+    }
+
+    static ArrayList<Integer> getReviewIDList(String doc_alias) throws ClassNotFoundException, SQLException {
+        ArrayList<Integer> list=new ArrayList<Integer>();
+        String statement="SELECT * FROM 356_review WHERE Doctor_Alias=? ORDER BY DATE DESC";
+        
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            stmt.setString(1,doc_alias);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            while(resultSet.next())
+            {
+                list.add(resultSet.getInt("Review_ID"));
+            }
+
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return list;
+    }
+
+    static Review getReviewByID(int ID) throws SQLException, ClassNotFoundException {
+        Review entry=new Review();
+        String statement="SELECT * FROM 356_review WHERE Review_ID=?";
+        
+        //Connection con=getConnection();
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement(statement);
+            stmt.setInt(1,ID);
+            ResultSet resultSet = stmt.executeQuery();
+            
+            if(resultSet.next())
+            {
+                entry.Review_ID=resultSet.getInt("Review_ID");
+                entry.Patient_Alias=resultSet.getString("Patient_Alias");
+                entry.Doctor_Alias=resultSet.getString("Doctor_Alias");
+                entry.Comment=resultSet.getString("Comment");
+                entry.Rating=resultSet.getInt("Rating");
+                entry.Date=resultSet.getDate("Date");
+            }
+
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return entry;
     }
 }
