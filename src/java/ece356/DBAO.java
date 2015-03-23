@@ -63,7 +63,43 @@ public class DBAO {
         return con;
     }
     
-    public static ArrayList<PatientSearchResult> patientSearch(String alias, String city, String province) throws SQLException, NamingException, ClassNotFoundException{
+    private static String getFriendshipStatus(String requestor, String requestee)
+                throws SQLException, NamingException, ClassNotFoundException {
+        String friendshipStatus="";
+        String stmt = "SELECT 356_friends.Friend_Accept FROM 356_friends " + 
+                       "WHERE Alias='" + requestor +"' AND Friend_Alias='" + requestee +"'";
+         
+        int friendshipCode = 0;
+        Connection con=getTestConnection();
+        try {
+            
+            PreparedStatement prepStmt = con.prepareStatement(stmt);
+            ResultSet resultSet = prepStmt.executeQuery();
+            if(!resultSet.next())
+            {
+                friendshipStatus = "none";
+            }
+            else {
+                friendshipCode = resultSet.getInt("Friend_Accept");
+                if(friendshipCode == 0)
+                {
+                    friendshipStatus = "Friend request sent";
+                }
+                else
+                    friendshipStatus = "We are friends";
+            }
+        }
+        catch (Exception e) {  
+            System.out.println(e);  
+        }
+        finally{
+            con.close(); // this statement returns the connection back to the pool
+        }
+        return friendshipStatus;
+    }
+    
+    public static ArrayList<PatientSearchResult> patientSearch(String myself, String alias, String city, String province) throws SQLException, NamingException, ClassNotFoundException{
+        final String friendship_serv = "AddFriendServlet";
         int conditionCount=0;
         ArrayList<String> conditions=new ArrayList<String>();
         ArrayList<String> aliases=new ArrayList<String>();
@@ -126,11 +162,16 @@ public class DBAO {
                 resultSet = stmt.executeQuery();
                 if (resultSet.next()){
                     PatientSearchResult result=new PatientSearchResult();
+                    
                     result.alias=resultSet.getString("356_patients.Alias");
+                    if(myself.equals(result.alias))
+                        continue;
+                    
                     result.home_address=resultSet.getString("356_patients.Addr_City")+", "+resultSet.getString("356_patients.Addr_Province");
                     result.review_count=resultSet.getInt("Review_Count");
                     result.last_review=resultSet.getDate("MOST_RECENT_DATE");
-                    result.link="link";
+                    result.link = friendship_serv + "?friend=" + result.alias;
+                    result.friendship = getFriendshipStatus(myself, result.alias);
                     results.add(result);
                 }
             }

@@ -5,7 +5,9 @@
  */
 package ece356Types;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 /**
  *
@@ -17,4 +19,17 @@ public class PatientSearchResult {
     public int review_count;
     public Date last_review;
     public String link;
+    public String friendship;
+    
+    public String GetLastReviewDate()
+    {
+        String output;
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        if(last_review == null)
+            output = "NONE";
+        else
+            output = dateformat.format(this.last_review);
+        
+        return output;
+    }
 }
