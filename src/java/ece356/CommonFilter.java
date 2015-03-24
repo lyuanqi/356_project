@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebFilter
-public class LoginFilter implements Filter {
+public class CommonFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -31,8 +31,8 @@ public class LoginFilter implements Filter {
         HttpSession session = request.getSession(false);
         response.setContentType("text/html");    
         PrintWriter out = response.getWriter();
-        
-        if (session == null || session.getAttribute("alias") == null) {
+
+        if (session == null || session.getAttribute("userType") == null) {
             out.print("<p style=\"color:red\">Please login first</p>");
             RequestDispatcher rd=request.getRequestDispatcher("index.jsp");    
             rd.include(request,response);  

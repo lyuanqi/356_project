@@ -4,10 +4,41 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>ece356.LoginFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>DoctorLoginFilter</filter-name>
+        <filter-class>ece356.DoctorLoginFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>CommonFilter</filter-name>
+        <filter-class>ece356.CommonFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CommonFilter</filter-name>
+        <url-pattern>/doctorProfile.jsp</url-pattern>
+        <url-pattern>/viewReviewPage.jsp</url-pattern>
+        <url-pattern>/GetDoctorProfileServlet</url-pattern>
+        <url-pattern>/FlipToNextReviewServlet</url-pattern>
+        <url-pattern>/FlipToPreviousReviewServlet</url-pattern>
+        <url-pattern>/ViewReviewByIDServlet</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>DoctorLoginFilter</filter-name>
+        <url-pattern>/doctorHome.jsp</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
-        <url-pattern>/success.jsp</url-pattern>
         <url-pattern>/patientHome.jsp</url-pattern>
+        <url-pattern>/doctorSearch.jsp</url-pattern>
+        <url-pattern>/doctorSearchResult.jsp</url-pattern>
+        <url-pattern>/friendship.jsp</url-pattern>
+        <url-pattern>/patientSearch.jsp</url-pattern>
+        <url-pattern>/patientSearchResult.jsp</url-pattern>
+        <url-pattern>/writeReview.jsp</url-pattern>
+        <url-pattern>/AddFriendServlet</url-pattern>
+        <url-pattern>/DoctorSearchServlet</url-pattern>
+        <url-pattern>/FriendListServlet</url-pattern>
+        <url-pattern>/PatientSearchServlet</url-pattern>
+        <url-pattern>/WriteDoctorReviewServlet</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -36,10 +67,6 @@
     <servlet>
         <servlet-name>FriendListServlet</servlet-name>
         <servlet-class>ece356.FriendListServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PatientPreSearchServlet</servlet-name>
-        <servlet-class>ece356.PatientPreSearchServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewReviewByIDServlet</servlet-name>
@@ -84,10 +111,6 @@
     <servlet-mapping>
         <servlet-name>FriendListServlet</servlet-name>
         <url-pattern>/FriendListServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PatientPreSearchServlet</servlet-name>
-        <url-pattern>/PatientPreSearchServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewReviewByIDServlet</servlet-name>

@@ -23,4 +23,5 @@ public class DoctorProfile {
     public ArrayList<String> review_links =new ArrayList<String>();
     public String write_link;
     public String profile_link;
+    public String email;
 }

@@ -48,7 +48,7 @@ public class WriteDoctorReviewServlet extends HttpServlet {
 
         
         String url="";
-        String successUrl = "writeReview.jsp";
+        String successUrl = "GetDoctorProfileServlet?alias="+doctor_alias;
         String failUrl = "writeReview.jsp";
         
         try {
@@ -78,7 +78,7 @@ public class WriteDoctorReviewServlet extends HttpServlet {
             }
             
             if(success==true){
-                out.print("<p style=\"color:green\">Comment Submitted!</p>");
+                //out.print("<p style=\"color:green\">Comment Submitted!</p>");
                 url=successUrl;
             }
             else{

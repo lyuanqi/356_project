@@ -228,6 +228,7 @@ public class DBAO {
                 
                 profile.write_link="writeReview.jsp";
                 profile.profile_link="GetDoctorProfileServlet?alias="+alias;
+                profile.email=resultSet.getString("Email");
             }
             ArrayList<Integer> list = getReviewIDList(alias);
             for (int i:list){
