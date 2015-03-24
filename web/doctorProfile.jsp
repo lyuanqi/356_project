@@ -24,7 +24,7 @@
         <h3><a href="doctorHome.jsp">Home</a></h3>
         <% } %>
         <h1>Doctor: <%= profile.name%></h1>
-        <input name="doc_dalias" value="<%=profile.alias%>">
+        <input type="hidden" name="doc_dalias" value="<%=profile.alias%>">
         <h3>Gender: <%=profile.gender%></h3>
         <h3>Average Star Rating: <%=profile.avg_rating%> </h3>
         <h3>Years since licensed: <%=profile.years_licensed%> </h3>
@@ -53,7 +53,10 @@
                 }
             %>
         <h3>Write a review for this doctor:</h3>
+        <%if(session.getAttribute("userType")=="patient"){%>
         <p><a href="<%=profile.write_link%>">Click to write a review</a></p>
+        <% } %>
+        
         
 
     </body>

@@ -34,7 +34,6 @@
 </Select>
 Comments:<br />
 <textarea name="comment" id="comments">
-
 </textarea><br />
 <input type="submit" value="Submit" />
 </form>

@@ -48,7 +48,7 @@ public class WriteDoctorReviewServlet extends HttpServlet {
 
         
         String url="";
-        String successUrl = "viewReivewPage.jsp";
+        String successUrl = "writeReview.jsp";
         String failUrl = "writeReview.jsp";
         
         try {
@@ -63,6 +63,10 @@ public class WriteDoctorReviewServlet extends HttpServlet {
             if (comment.length()<5){
                 success=false;
                 out.print("<p style=\"color:red\">Please enter more than 5 characters in your comment</p>");   
+            }
+            else if (comment.length()>1000){
+                success=false;
+                out.print("<p style=\"color:red\">Please enter less than 1000 characters in your comment</p>");   
             }
             else if (commentValid==false){
                 success=false;
