@@ -11,6 +11,8 @@ import ece356Types.DoctorProfile;
 import ece356Types.DoctorSearchResult;
 import ece356Types.PatientSearchResult;
 import ece356Types.Review;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;

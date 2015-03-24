@@ -24,7 +24,7 @@
             <tr>
                 <td><%= result.name %></td>
                 <td><%= result.gender%></td>
-                <td><%= result.avg_rating%></td>
+                <td><%= (double)Math.round(result.avg_rating * 10) / 10%></td>
                 <td><%= result.review_count %></td>
                 <td><a href="<%= result.profile_link%>">Profile Link</a></td>
             </tr>

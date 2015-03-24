@@ -4,6 +4,7 @@
     Author     : liyuanqi
 --%>
 
+<%@page import="ece356.DBAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="ece356Types.DoctorProfile"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -29,7 +30,7 @@
         <% } %>
         <input type="hidden" name="doc_dalias" value="<%=profile.alias%>">
         <h3>Gender: <%=profile.gender%></h3>
-        <h3>Average Star Rating: <%=profile.avg_rating%> </h3>
+        <h3>Average Star Rating: <%=(double)Math.round(profile.avg_rating * 10) / 10%> </h3>
         <h3>Years since licensed: <%=profile.years_licensed%> </h3>
         <h3>Specialization Areas:</h3>
             <%
