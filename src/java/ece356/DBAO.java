@@ -26,13 +26,13 @@ import javax.sql.DataSource;
  * @author liyuanqi
  */
 public class DBAO {
-    public static final String host = "localhost";
+    public static final String host = "eceweb.uwaterloo.ca";
     public static final String url = "jdbc:mysql://" + host + ":3306/";
-    public static final String nid = "356_db_project";
-    public static final String user = "root";
-    public static final String pwd = "root";
+    public static final String nid = "ece356db_lyuanqi";
+    public static final String user = "user_lyuanqi";
+    public static final String pwd = "user_lyuanqi";
     
-    public static Connection getTestConnection()
+    public static Connection getConnection()
             throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         Connection con = DriverManager.getConnection(url, user, pwd);
@@ -40,7 +40,6 @@ public class DBAO {
         try {
             con.createStatement();
             stmt = con.createStatement();
-            //stmt.execute("USE hospital_" + nid);
             stmt.execute("USE "+ nid);
         } finally {
             if (stmt != null) {
@@ -50,13 +49,13 @@ public class DBAO {
         return con;
     }
     
-    public static Connection getConnection() throws NamingException, SQLException{
+    public static Connection getTestConnection() throws NamingException, SQLException{
         InitialContext cxt = new InitialContext(); 
         if (cxt == null) {
             throw new RuntimeException("Unable to create naming context!");
         }
         //Context dbContext = (Context) cxt.lookup("java:comp/env"); 
-        DataSource ds = (DataSource) cxt.lookup("jdbc/myDatasource");
+        DataSource ds = (DataSource) cxt.lookup("jdbc/myDatasource_eceweb");
         if (ds == null) {
             throw new RuntimeException("Data source not found!");
         }
@@ -74,9 +73,9 @@ public class DBAO {
                        "WHERE Alias='" + requestor +"' AND Friend_Alias='" + requestee +"'";
          
         int friendshipCode = 0;
-        Connection con=getTestConnection();
+        Connection con=null;
         try {
-            
+            con=getTestConnection();
             PreparedStatement prepStmt = con.prepareStatement(stmt);
             ResultSet resultSet = prepStmt.executeQuery();
             if(!resultSet.next())
@@ -147,9 +146,9 @@ public class DBAO {
         }
 
         //Connection con=getConnection();
-        Connection con=getTestConnection();
+        Connection con=null;
         try {
-            
+            con=getTestConnection();
             PreparedStatement stmt = con.prepareStatement(statement1);
             for (int i=1;i<=conditions.size();i++){
                 stmt.setString(i,conditions.get(i-1));
@@ -194,9 +193,9 @@ public class DBAO {
         DoctorProfile profile = new DoctorProfile();
         String statement="SELECT * FROM Doctor_Details LEFT JOIN 356_review ON Doctor_Details.Doctor=356_review.Doctor_Alias WHERE DOCTOR=?";
         //Connection con=getConnection();
-        Connection con=getTestConnection();
+        Connection con=null;
         try {
-            
+            con=getTestConnection();
             profile.avg_rating= getDoctorAvgRating(alias);
             profile.review_count=getDoctorReviewCount(alias);
             
@@ -251,9 +250,9 @@ public class DBAO {
         double rating=0;
         String statement="SELECT AVG(356_review.Rating) AS Average_Rating From 356_review WHERE 356_review.Doctor_Alias = ? GROUP BY 356_review.Doctor_Alias;";
         //Connection con=getConnection();
-        Connection con=getTestConnection();
+        Connection con=null;
         try {
-            
+            con=getTestConnection();
             PreparedStatement stmt = con.prepareStatement(statement);
             stmt.setString(1,alias);
             ResultSet resultSet = stmt.executeQuery();
@@ -277,9 +276,9 @@ public class DBAO {
         int count=0;
         String statement="SELECT COUNT(356_review.Review_ID) AS Review_Count From 356_review WHERE 356_review.Doctor_Alias = ? GROUP BY 356_review.Doctor_Alias;";
         //Connection con=getConnection();
-        Connection con=getTestConnection();
+        Connection con=null;
         try {
-            
+            con=getTestConnection();
             PreparedStatement stmt = con.prepareStatement(statement);
             stmt.setString(1,alias);
             ResultSet resultSet = stmt.executeQuery();
@@ -303,9 +302,9 @@ public class DBAO {
         boolean reviewed=false;
         String statement="SELECT * FROM 356_friends JOIN 356_review ON 356_friends.Friend_Alias = 356_review.Patient_Alias WHERE 356_friends.Alias=? AND 356_friends.Friend_Accept=1 AND 356_review.Doctor_Alias=?";
         //Connection con=getConnection();
-        Connection con=getTestConnection();
+        Connection con = null;
         try {
-            
+            con=getTestConnection();
             PreparedStatement stmt = con.prepareStatement(statement);
             stmt.setString(1,patient_alias);
             stmt.setString(2,doctor_alias);
@@ -330,9 +329,9 @@ public class DBAO {
         ArrayList<String> results=new ArrayList<String>();
         String statement="SELECT DISTINCT Specialization_Area FROM 356_specialization ORDER BY Specialization_Area";
         //Connection con=getConnection();
-        Connection con=getTestConnection();
+        Connection con=null;
         try {
-            
+            con=getTestConnection();
             PreparedStatement stmt = con.prepareStatement(statement);
             ResultSet resultSet = stmt.executeQuery();
             
@@ -391,9 +390,9 @@ public class DBAO {
 
 
         //Connection con=getConnection();
-        Connection con=getTestConnection();
+        Connection con=null;
         try {
-            
+            con=getTestConnection();
             PreparedStatement stmt = con.prepareStatement(statement);
             ResultSet resultSet = stmt.executeQuery();
             
@@ -855,7 +854,7 @@ public class DBAO {
         return results;
     }
 
-    public static ArrayList<Integer> getReviewIDList(String doc_alias) throws ClassNotFoundException, SQLException {
+    public static ArrayList<Integer> getReviewIDList(String doc_alias) throws ClassNotFoundException, SQLException, NamingException {
         ArrayList<Integer> list=new ArrayList<Integer>();
         String statement="SELECT * FROM 356_review WHERE Doctor_Alias=? ORDER BY DATE DESC";
         
@@ -882,7 +881,7 @@ public class DBAO {
         return list;
     }
 
-    public static Review getReviewByID(int ID) throws SQLException, ClassNotFoundException {
+    public static Review getReviewByID(int ID) throws SQLException, ClassNotFoundException, NamingException {
         Review entry=new Review();
         String statement="SELECT * FROM 356_review WHERE Review_ID=?";
         
@@ -914,7 +913,7 @@ public class DBAO {
         return entry;
     }
 
-    public static int getNextReviewID(int intID, String doctor) throws ClassNotFoundException, SQLException {
+    public static int getNextReviewID(int intID, String doctor) throws ClassNotFoundException, SQLException, NamingException {
         int next=-1;
         ArrayList<Integer> list=getReviewIDList(doctor);
         for(int i=0;i<list.size();i++){
@@ -925,7 +924,7 @@ public class DBAO {
         }
         return next;
     }
-    public static int getPreviousReviewID(int intID, String doctor) throws ClassNotFoundException, SQLException {
+    public static int getPreviousReviewID(int intID, String doctor) throws ClassNotFoundException, SQLException, NamingException {
         int previous=-1;
         ArrayList<Integer> list=getReviewIDList(doctor);
         for(int i=0;i<list.size();i++){
@@ -937,7 +936,7 @@ public class DBAO {
         return previous;
     }
 
-    static boolean writeReview(String doctor_alias, String patient_alias, String comment, int rating) throws SQLException, ClassNotFoundException {
+    static boolean writeReview(String doctor_alias, String patient_alias, String comment, int rating) throws SQLException, ClassNotFoundException, NamingException {
         boolean success=false;
         String statement="INSERT INTO 356_review(Patient_Alias,Doctor_Alias,Rating,Comment,date) VALUES (?,?,?,?,NOW());";
         
